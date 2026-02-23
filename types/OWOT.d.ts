@@ -1,4 +1,120 @@
 /**
+ * An object containing the user's current text color, cell background color, and chat nick name.
+ */
+declare var YourWorld: {
+    /**
+     * User's current text color.
+     * @remarks The color format is in `0xrrggbb`, meaning you have to bit-shift colors to get the R, G, and B values inside the color.
+     * @example
+     * Setting the user color to a random one:
+     * ```js
+     * YourWorld.Color = Math.round(Math.random() * 0xFFFFFF)
+     * ```
+     * @example
+     * Packing an RGB value inside the color value:
+     * ```js
+     * let r = 64,
+     *     g = 64,
+     *     b = 64
+     *
+     * YourWorld.Color = (r << 16) | (g << 8) | b
+     * ```
+     */
+    Color: number | null;
+    /**
+     * User's current background color. -1 if not set. Uses the `0xrrggbb` color format.
+     * @example
+     * Clearing the user's background color:
+     * ```js
+     * YourWorld.BgColor = -1;
+     * ```
+     * @see {@link YourWorld.Color}
+     */
+    BgColor: number;
+    /**
+     * User's current nickname. `null` if not set.
+     */
+    Nickname: string | null;
+};
+
+/**
+ * The OWOT DOM <canvas> element. Initialized in {@link init_dom}. Its selector is #owot.
+ *
+ * @example
+ * Hide the OWOT canvas:
+ * ```js
+ * owot.style.opacity = 0;
+ * ```
+ */
+declare var owot: HTMLCanvasElement | null;
+/**
+ * The CanvasRenderingContext2D of the OWOT canvas. Initialized in {@link init_dom}.
+ *
+ * @example
+ * Clear all the rendered tiles from the view:
+ * ```js
+ * owotCtx.clearRect(0, 0, owotWidth, owotHeight);
+ * ```
+ */
+declare var owotCtx: CanvasRenderingContext2D | null;
+/**
+ * The DOM <textarea> element used for writing and pasting to the OWOT canvas.
+ *
+ * @example
+ * Paste "hello world" at the current cursor position:
+ * ```js
+ * textInput.value = `hello world`;
+ * ```
+ */
+declare var textInput: HTMLTextAreaElement | null;
+
+/**
+ * The DOM <a> anchor element. It is used for user link clicks and changes the href upon hovering on a link.
+ *
+ * Upon hovering, it also changes the {@link linkParams} global variable to match the metadata of the hovered link.
+ *
+ * @example
+ * Log to the console whenever a JavaScript link is clicked:
+ * ```js
+ * linkElm.addEventListener("click", () => {
+ *   if(linkParams.protocol === "javascript") console.log(linkParams.protocol)
+ * })
+ */
+declare var linkElm: HTMLAnchorElement | null;
+
+/**
+ * The DOM <div> element used to scale the linkElm to the same size as a cell (character) within the OWOT canvas.
+ *
+ * @example
+ * Highlights the URL being hovered over.
+ * ```js
+ * linkDiv.style.background = `rgba(22, 208, 233, 0.5)`
+ */
+declare var linkDiv: HTMLDivElement | null;
+
+/**
+ * The metadata of {@link linkElm}. Upon hovering on a link on canvas, this global variable changes its properties.
+ */
+declare var linkParams: {
+    /**
+     * The protocol of the link. (comu for {@link Cmd | cmd} links, javascript for JavaScript links) Empty when the link is a real website link.
+     */
+    protocol: string;
+    /**
+     * The URL portion of the link for custom links, and the entire URL for website links.
+     */
+    url: string;
+    /**
+     * Similar to the HTTP Host header. Empty for custom links.
+     */
+    host: string;
+    /**
+     * Determines whether or not the link is a coordinate link.
+     */
+    coord: boolean;
+};
+
+/**
  * @module Tiles
  *
  * OWOT worlds are divided into 16x8 character grids, known as tiles. These tiles are used in many OWOT functions like {@link getChar}.
@@ -87,48 +203,18 @@ declare function writeCharToXY(
 ): void;
 
 /**
- * An object containing the user's current text color, cell background color, and chat nick name.
- */
-declare var YourWorld: {
-    /**
-     * User's current text color.
-     * @remarks The color format is in `0xrrggbb`, meaning you have to bit-shift colors to get the R, G, and B values inside the color.
-     * @example
-     * Setting the user color to a random one:
-     * ```js
-     * YourWorld.Color = Math.round(Math.random() * 0xFFFFFF)
-     * ```
-     * @example
-     * Packing an RGB value inside the color value:
-     * ```js
-     * let r = 64,
-     *     g = 64,
-     *     b = 64
-     *
-     * YourWorld.Color = (r << 16) | (g << 8) | b
-     * ```
-     */
-    Color: number | null;
-    /**
-     * User's current background color. -1 if not set. Uses the `0xrrggbb` color format.
-     * @example
-     * Clearing the user's background color:
-     * ```js
-     * YourWorld.BgColor = -1;
-     * ```
-     * @see {@link YourWorld.Color}
-     */
-    BgColor: number;
-    /**
-     * User's current nickname. `null` if not set.
-     */
-    Nickname: string | null;
-};
-
-/**
  * An object containing various OWOT scripting functions. It's also inherited from EventEmitter.
  */
 declare var w: {
+    acceptOwnEdits: boolean;
+    backgroundInfo: {
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+        alpha: number;
+        rmod: number;
+    };
     /**
      * Sets the interval, in milliseconds, between text flushes after writing.
      * @param t The time between each flush.
