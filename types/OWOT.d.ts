@@ -146,7 +146,7 @@ declare function getChar(
  * Gets the character and its info from a specific location.
  * @returns The character and its info at that location.
  */
-declare function getCharInfoXY(x: number, y: number): Character;
+declare function getCharInfoXY(x: number, y: number): -1 | Character;
 
 /**
  * Gets the character color from a specific location. Uses the {@link Tiles | tile} coordinate system.
@@ -202,10 +202,8 @@ declare function writeCharToXY(
     dS?: number,
 ): void;
 
-/**
- * An object containing various OWOT scripting functions. It's also inherited from EventEmitter.
- */
-declare var w: {
+
+declare interface wGlobals {
     acceptOwnEdits: boolean;
     backgroundInfo: {
         x: number;
@@ -361,7 +359,7 @@ declare interface Character {
     /**
      * Text decorations that this character has.
      */
-    decoration: Decorations;
+    decoration: number | Decorations | null;
 }
 /**
  * Every character decoration.
@@ -378,14 +376,14 @@ declare interface Decorations {
     /**
      * 1 if underline, 0 otherwise.
      */
-    underline: number;
+    under: number;
     /**
      * 1 if strikethrough, 0 otherwise.
      */
-    strikethrough: number;
+    strike: number;
 }
 /**
- * Protections are levels of protection that a character can have.
+ * Protections are levels of protection that a character can have. It is also used for permissions.
  */
 declare const enum Protections {
     /**

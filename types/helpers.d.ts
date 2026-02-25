@@ -176,12 +176,6 @@ declare interface AjaxSettings {
  * Makes an AJAX request using XMLHttpRequest.
  * @remarks URL-encodes the payload.
  * @param settings The AJAX settings.
- *
- * @example
- * Get the current users:
- * ```js
- * let
- * ```
  */
 declare function ajaxRequest(settings: AjaxSettings): void;
 
@@ -532,3 +526,422 @@ declare var elm: {
  * @param list The elements to add.
  */
 declare function defineElements(list: Record<string, HTMLElement | null>): void;
+
+/**
+ * Keyboard keycodes. Used in {@link getKeyCode}.
+ */
+declare var keyCodeTbl: {
+    BACKSPACE: 8;
+    TAB: 9;
+    ENTER: 13;
+    SHIFTRIGHT: 16;
+    CONTROLLEFT: 17;
+    CAPSLOCK: 20;
+    ESCAPE: 27;
+    SPACE: 32;
+    PAGEUP: 33;
+    PAGEDOWN: 34;
+    END: 35;
+    HOME: 36;
+    ARROWLEFT: 37;
+    ARROWUP: 38;
+    ARROWRIGHT: 39;
+    ARROWDOWN: 40;
+    DELETE: 46;
+    DIGIT0: 48;
+    DIGIT1: 49;
+    DIGIT2: 50;
+    DIGIT3: 51;
+    DIGIT4: 52;
+    DIGIT5: 53;
+    DIGIT6: 54;
+    DIGIT7: 55;
+    DIGIT8: 56;
+    DIGIT9: 57;
+    KEYA: 65;
+    KEYB: 66;
+    KEYC: 67;
+    KEYD: 68;
+    KEYE: 69;
+    KEYF: 70;
+    KEYG: 71;
+    KEYH: 72;
+    KEYI: 73;
+    KEYJ: 74;
+    KEYK: 75;
+    KEYL: 76;
+    KEYM: 77;
+    KEYN: 78;
+    KEYO: 79;
+    KEYP: 80;
+    KEYQ: 81;
+    KEYR: 82;
+    KEYS: 83;
+    KEYT: 84;
+    KEYU: 85;
+    KEYV: 86;
+    KEYW: 87;
+    KEYX: 88;
+    KEYY: 89;
+    KEYZ: 90;
+    CONTEXTMENU: 93;
+    NUMPAD0: 96;
+    NUMPAD1: 97;
+    NUMPAD2: 98;
+    NUMPAD3: 99;
+    NUMPAD4: 100;
+    NUMPAD5: 101;
+    NUMPAD6: 102;
+    NUMPAD7: 103;
+    NUMPAD8: 104;
+    NUMPAD9: 105;
+    NUMPADMULTIPLY: 106;
+    NUMPADADD: 107;
+    NUMPADSUBTRACT: 109;
+    NUMPADDECIMAL: 110;
+    NUMPADDIVIDE: 111;
+    F1: 112;
+    F2: 113;
+    F3: 114;
+    F4: 115;
+    F5: 116;
+    F6: 117;
+    F7: 118;
+    F8: 119;
+    F9: 120;
+    F10: 121;
+    F11: 122;
+    F12: 123;
+    SEMICOLON: 186;
+    COMMA: 188;
+    MINUS: 189;
+    PERIOD: 190;
+    SLASH: 191;
+    BACKQUOTE: 192;
+    BRACKETLEFT: 219;
+    BACKSLASH: 220;
+    BRACKETRIGHT: 221;
+    QUOTE: 222;
+};
+
+type KeyCode = (typeof keyCodeTbl)[keyof typeof keyCodeTbl];
+
+/**
+ * Maps modern code strings to legacy keycodes.
+ * @param e The event to get the key code of.
+ */
+declare function getKeyCode(e: KeyboardEvent): KeyCode;
+
+/**
+ * Escapes a string by adding backslashes. It escapes `"`, `'` and `\`.
+ * @param text The text to escape.
+ */
+declare function escapeQuote(text: string): string;
+
+/**
+ * Escapes a URL using the {@link escapeQuote} function.
+ * @param url The URL to escape.
+ */
+declare function escapeURLQuote(url: string): string | "";
+
+/**
+ * Extracts a position out of a string like "y,x".
+ * @param ref The string to extract a position from.
+ */
+declare function getPos(ref: string): Point;
+
+/**
+ * Offsets every tile coordinate in `data` by the specified amount.
+ * @param data The tile data to offset.
+ * @param tileOffX The tile offset X.
+ * @param tileOffY The tile offset Y.
+ */
+declare function tile_offset_object(data: { [key: string]: any }, tileOffX: number, tileOffY: number): void;
+
+/**
+ * 
+ * @param str The string to escape.
+ * @param non_breaking_space Whether to replace spaces with \&nbsp;
+ * @param newline_br Whether to replace newlines with \<br\>.
+ */
+declare function html_tag_esc(str: string, non_breaking_space: boolean, newline_br: boolean): string;
+
+type HexChar = "0" | "1" | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | 'a' | 'A' | 'b' | 'B' | 'c' | 'C' | 'd' | 'D' | 'e' | 'E' | 'f' | 'F';
+type HexString = `${HexChar}${string}` | '';
+
+/**
+ * Checks if a string is hexadecimal (base-16).
+ * @param str The string to check.
+ */
+declare function isHexString(str: string): str is HexString;
+
+/**
+ * Converts a Unix epoch time into a readable date and time.
+ * @param epoch The Unix time to convert.
+ */
+declare function convertToDate(epoch: number): string;
+
+type RGBArray = [number, number, number];
+
+/**
+ * Converts a 0xrrggbb color to a [r,g,b] array.
+ * @param value The color to convert.
+ */
+declare function int_to_rgb(value: number): RGBArray;
+
+/**
+ * Converts an 0xrrggbb color to a hex code.
+ * @param value The color to convert.
+ */
+declare function int_to_hexcode(value: number): string;
+
+/**
+ * A circular buffer (ring buffer) that maintains a fixed length.
+ * @template T The type of elements stored in the buffer.
+ */
+declare class CircularBuffer<T> {
+    /**
+     * Maximum length of the buffer.
+     */
+    len: number;
+    /** 
+     * The buffer which contains the actual buffer elements.
+     */
+    buffer: (T | undefined)[];
+    /**
+     * The current write position.
+     */
+    pos: number;
+    /**
+     * Number of stored elements.
+     */
+    elms: number;
+    /**
+     * Creates a circular buffer (ring buffer) that maintains a fixed length.
+     * @param maxLen The maximum length of the buffer.
+     */
+    constructor(maxLen: number);
+
+    /**
+     * Adds data to the buffer.
+     * @param data The data to add.
+     */
+    push(data: T): void;
+    /**
+     * Removes (pops) and returns the last added element from the buffer.
+     * @returns The popped element.
+     */
+    pop(): T | undefined;
+    /**
+     * Restores the most recently popped element. 
+     * @remarks Does nothing if buffer is full or no element to restore.
+     * @returns The restored element.
+     */
+    unpop(): T | undefined;
+    /**
+     * Removes undefined elements from the buffer.
+     */
+    trim(): void;
+    /**
+     * Returns an array of all elements in the buffer, in FIFO order (from oldest to newest).
+     * @returns The oldest-to-newest array.
+     */
+    unwind(): T[];
+    /**
+     * Returns the most recently added element without removing it.
+     * @returns The most recent element.
+     */
+    top(): T | undefined;
+}
+
+type SafeLinkHost = [
+    "yourworldoftext.com",
+    "ourworldofpixels.com",
+    "ourworldoftext.com",
+    "dir.ourworldoftext.com",
+    "test.ourworldoftext.com",
+    "wiki.ourworldoftext.com",
+    "owot.me",
+    "spooks.me",
+    "youtube.com",
+    "discord.com",
+    "discord.gg",
+    "discordapp.com",
+    "reddit.com",
+    "old.reddit.com",
+    string
+][number];
+
+/**
+ * The links that are considered safe to open by default.
+ */
+declare var safeLinkHosts: SafeLinkHost[];
+
+/**
+ * Gets a domain's hostname.
+ * @param host The domain to take a hostname from.
+ */
+declare function getBasicHostname(host: string): string;
+
+/**
+ * Checks if a hostname is safe to open (is included in {@link safeLinkHosts}).
+ * @param host The hostname to check.
+ */
+declare function isSafeHostname(host: string): host is SafeLinkHost;
+
+type FixedLengthArray<T, L extends number> = [T, ...T[]] & { length: L };
+
+/**
+ * @deprecated For compatibility.
+ */
+declare var blankColor: FixedLengthArray<number, 128>;
+
+/**
+ * A wrapper around WebSocket that automatically reconnects.
+ */
+declare class ReconnectingWebSocket {
+    /**
+     * The binary data type used by the connection.
+     */
+    binaryType: BinaryType;
+    /**
+     * After a disconnect, after this much time (in milliseconds), the socket would try to reconnect to the same URL specified in the constructor.
+     */
+    reconnectTimeout: number;
+    /**
+     * The underlying WebSocket.
+     */
+    socket: WebSocket;
+
+    /**
+     * Called when the connection is successfully opened.
+     */
+    onopen: ((ev: Event) => any) | null;
+    /**
+     * Called when the connection is closed.
+     */
+    onclose: ((ev: CloseEvent) => any) | null;
+    /**
+     * Called when a message is received from the server.
+     */
+    onmessage: ((ev: MessageEvent) => any) | null;
+    /**
+     * Called when a socket error occurs.
+     */
+    onerror: ((ev: Event) => any) | null;
+
+    /**
+     * Creates a new ReconnectingWebSocket.
+     * @param url The WebSocket URL to connect to.
+     */
+    constructor(url: string);
+
+    /**
+     * Sends data through the WebSocket connection.
+     * @param data The data to send.
+     */
+    send(data: string | ArrayBuffer | Blob | ArrayBufferView): void;
+    /**
+     * Closes the WebSocket connection permanently.
+     */
+    close(): void;
+    /**
+     * Reconnects the WebSocket.
+     */
+    refresh(): void;
+}
+
+/**
+ * Splits a string into an array of visible characters (grapheme clusters).
+ * @param str The string to split.
+ * @param noSurrog If this is true, surrogates are split.
+ * @param noComb If this is true, combining characters are split.
+ * @param norm If this is true, combining ranges are treated as normal characters.
+ * @returns The split array.
+ */
+declare function advancedSplit(str: string | string[], noSurrog?: boolean, noComb?: boolean, norm?: boolean): string[];
+
+/**
+ * Filters out "advanced" characters (combining and surrogate characters) based on parameters.
+ * @param array The array of characters to filter.
+ * @param noSurrogates If this is true, surrogate-using characters are replaced with "?".
+ * @param noCombining If this is true, the characters lose their diacritics.
+ * @returns The filtered array.
+ */
+declare function filterAdvancedChars(array: string[], noSurrogates: boolean, noCombining: boolean): string[];
+
+declare interface wGlobals {
+    /**
+     * Dynamically loads a remote script and adds it to the DOM.
+     * @param url The URL of the script to load.
+     * @param callback The callback to call when the script is loaded.
+     */
+    loadScript(url: string, callback: (ev: Event) => void): void;
+    /**
+     * Dynamically loads a remote script and adds it to the DOM.
+     * @param url The URL of the script to load.
+     * @param sync Synchronously loads the script instead of asynchronously adding a callback.
+     */
+    loadScript(url: string, sync: true): void;
+    /**
+     * Clipboard utilities for copying text to the system clipboard.
+     */
+    clipboard: {
+        /**
+         * The textarea element used for clipboard operations.
+         * Created by {@link w.clipboard.init}.
+         */
+        textarea: HTMLTextAreaElement | null;
+        /**
+         * Initializes the clipboard by adding a textarea to the DOM. Must be called before using {@link w.clipboard.copy}.
+         */
+        init: () => void;
+        /**
+         * Copies a string into the system clipboard.
+         * @param string The string to copy into the clipboard.
+         */
+        copy: (string: string) => void;
+    };
+    /**
+     * Event listener storage. Maps event names to callback function arrays.
+     */
+    events: Record<string, ((data: any) => void)[]>;
+    /**
+     * Registers an event listener for a specific event type.
+     * @param type The event type to listen for (case-insensitive).
+     * @param call The callback to call when the event is emitted.
+     */
+    on(type: string, call: (data: any) => any): void;
+    /**
+     * Removes an event listener from a specific event type. Removes all occurrences of the specified callback function.
+     * @param type The event type to remove a listener from (case-insensitive).
+     * @param call The exact callback to remove.
+     */
+    off(type: string, call: (data: any) => any): void;
+    /**
+     * Emits an event, calling all registered callback with the provided data.
+     * @param type The event type to emit (case-insensitive).
+     * @param data Data to pass to
+     */
+    emit(type: string, data: any): void;
+    /**
+     * Determines if an event type has listeners.
+     * @param type The event type to check for.
+     */
+    listening(type: string): boolean;
+    /**
+     * Alias for {@link advancedSplit}.
+     */
+    split: typeof advancedSplit;
+}
+
+/**
+ * A utility object containing various helper functions, and an event system. Contrary to how it appears, this is NOT an EventEmitter inherit.
+ * @alias OWOT
+ */
+declare var w: wGlobals;
+
+/**
+ * Another name for {@link w}.
+ */
+declare var OWOT: typeof w;
