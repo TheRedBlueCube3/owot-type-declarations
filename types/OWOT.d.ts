@@ -202,7 +202,6 @@ declare function writeCharToXY(
     dS?: number,
 ): void;
 
-
 declare interface wGlobals {
     acceptOwnEdits: boolean;
     backgroundInfo: {
@@ -233,8 +232,8 @@ declare interface wGlobals {
     /**
      * Listens for comu events.
      */
-    on: (eventName: "cmd", callback: (e: Cmd) => void) => void;
-};
+    on(eventName: "cmd", callback: (e: Cmd) => void): void;
+}
 
 /**
  * An object containing various network commands.
@@ -368,19 +367,19 @@ declare interface Decorations {
     /**
      * 1 if bold, 0 otherwise.
      */
-    bold: number;
+    bold: NumBoolean;
     /**
      * 1 if italic, 0 otherwise.
      */
-    italic: number;
+    italic: NumBoolean;
     /**
      * 1 if underline, 0 otherwise.
      */
-    under: number;
+    under: NumBoolean;
     /**
      * 1 if strikethrough, 0 otherwise.
      */
-    strike: number;
+    strike: NumBoolean;
 }
 /**
  * Protections are levels of protection that a character can have. It is also used for permissions.
@@ -393,9 +392,9 @@ declare const enum Protections {
     /**
      * Member - writable by the world owner and members.
      */
-    Member = 1,
+    Members = 1,
     /**
      * Owner - writable only by the world owner.
      */
-    Owner = 2,
+    Admin = 2,
 }
