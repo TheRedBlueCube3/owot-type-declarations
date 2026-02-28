@@ -950,13 +950,13 @@ declare interface wGlobals {
      * @param type The event type to listen for (case-insensitive).
      * @param call The callback to call when the event is emitted.
      */
-    on(type: string, call: (data: any) => any): void;
+    on(type: string, call: (data: any) => void): void;
     /**
      * Removes an event listener from a specific event type. Removes all occurrences of the specified callback function.
      * @param type The event type to remove a listener from (case-insensitive).
      * @param call The exact callback to remove.
      */
-    off(type: string, call: (data: any) => any): void;
+    off(type: string, call: (data: any) => void): void;
     /**
      * Emits an event, calling all registered callbacks with the provided data.
      * @param type The event type to emit (case-insensitive).
