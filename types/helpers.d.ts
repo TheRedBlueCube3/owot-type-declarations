@@ -656,18 +656,48 @@ declare function getPos(ref: string): Point;
  * @param tileOffX The tile offset X.
  * @param tileOffY The tile offset Y.
  */
-declare function tile_offset_object(data: { [key: string]: any }, tileOffX: number, tileOffY: number): void;
+declare function tile_offset_object(
+    data: { [key: string]: any },
+    tileOffX: number,
+    tileOffY: number,
+): void;
 
 /**
- * 
+ *
  * @param str The string to escape.
  * @param non_breaking_space Whether to replace spaces with \&nbsp;
  * @param newline_br Whether to replace newlines with \<br\>.
  */
-declare function html_tag_esc(str: string, non_breaking_space: boolean, newline_br: boolean): string;
+declare function html_tag_esc(
+    str: string,
+    non_breaking_space: boolean,
+    newline_br: boolean,
+): string;
 
-type HexChar = "0" | "1" | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | 'a' | 'A' | 'b' | 'B' | 'c' | 'C' | 'd' | 'D' | 'e' | 'E' | 'f' | 'F';
-type HexString = `${HexChar}${string}` | '';
+type HexChar =
+    | "0"
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+    | "a"
+    | "A"
+    | "b"
+    | "B"
+    | "c"
+    | "C"
+    | "d"
+    | "D"
+    | "e"
+    | "E"
+    | "f"
+    | "F";
+type HexString = `${HexChar}${string}` | "";
 
 /**
  * Checks if a string is hexadecimal (base-16).
@@ -704,7 +734,7 @@ declare class CircularBuffer<T> {
      * Maximum length of the buffer.
      */
     len: number;
-    /** 
+    /**
      * The buffer which contains the actual buffer elements.
      */
     buffer: (T | undefined)[];
@@ -733,7 +763,7 @@ declare class CircularBuffer<T> {
      */
     pop(): T | undefined;
     /**
-     * Restores the most recently popped element. 
+     * Restores the most recently popped element.
      * @remarks Does nothing if buffer is full or no element to restore.
      * @returns The restored element.
      */
@@ -769,7 +799,7 @@ type SafeLinkHost = [
     "discordapp.com",
     "reddit.com",
     "old.reddit.com",
-    string
+    string,
 ][number];
 
 /**
@@ -859,7 +889,12 @@ declare class ReconnectingWebSocket {
  * @param norm If this is true, combining ranges are treated as normal characters.
  * @returns The split array.
  */
-declare function advancedSplit(str: string | string[], noSurrog?: boolean, noComb?: boolean, norm?: boolean): string[];
+declare function advancedSplit(
+    str: string | string[],
+    noSurrog?: boolean,
+    noComb?: boolean,
+    norm?: boolean,
+): string[];
 
 /**
  * Filters out "advanced" characters (combining and surrogate characters) based on parameters.
@@ -868,7 +903,11 @@ declare function advancedSplit(str: string | string[], noSurrog?: boolean, noCom
  * @param noCombining If this is true, the characters lose their diacritics.
  * @returns The filtered array.
  */
-declare function filterAdvancedChars(array: string[], noSurrogates: boolean, noCombining: boolean): string[];
+declare function filterAdvancedChars(
+    array: string[],
+    noSurrogates: boolean,
+    noCombining: boolean,
+): string[];
 
 declare interface wGlobals {
     /**
@@ -919,9 +958,9 @@ declare interface wGlobals {
      */
     off(type: string, call: (data: any) => any): void;
     /**
-     * Emits an event, calling all registered callback with the provided data.
+     * Emits an event, calling all registered callbacks with the provided data.
      * @param type The event type to emit (case-insensitive).
-     * @param data Data to pass to
+     * @param data Data to pass to the event listeners (callbacks).
      */
     emit(type: string, data: any): void;
     /**
