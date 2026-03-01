@@ -351,3 +351,9 @@ type LongWidthChar = [
     74801,
     43461,
 ][number];
+
+interface ChatSendEvent {
+    message: string;
+    opts: ApiChatOpts;
+    cancel: boolean;
+}

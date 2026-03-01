@@ -4,7 +4,7 @@ declare interface wGlobals {
      */
     on(type: "chat", call: (e: ChatMessageData) => void): void;
     /**
-     * Removes every "chat message" event listener with this callback.
+     * Removes every "chat message" event listener with this specific callback.
      */
     off(type: "chat", call: (e: ChatMessageData) => void): void;
     /**
@@ -17,13 +17,52 @@ declare interface wGlobals {
      */
     on(type: "chatMod", call: (e: ChatMessageData) => void): void;
     /**
-     * Removes every "chat message" event listener with this callback.
+     * Removes every "chat message" event listener with this specific callback.
      */
     off(type: "chatMod", call: (e: ChatMessageData) => void): void;
     /**
      * Emits a "chat message" event.
      */
     emit(type: "chatMod", call: ChatMessageData): void;
+
+    /**
+     * Fired when a chat message is sent by the user using api_chat_send.
+     */
+    on(type: "chatSend", call: (e: ChatSendEvent) => void): void;
+    /**
+     * Removes every "user-sent chat message" event listener with this specific callback.
+     */
+    off(type: "chatSend", call: (e: ChatSendEvent) => void): void;
+    /**
+     * Emits a "user-sent chat message" event.
+     */
+    emit(type: "chatSend", call: ChatSendEvent): void;
+
+    /**
+     * Fired when the chat window is closed.
+     */
+    on(type: "chatClose", call: () => void): void;
+    /**
+     * Removes every "chat window closed" event listener with this specific callback.
+     */
+    off(type: "chatClose", call: () => void): void;
+    /**
+     * Emitted when the chat window is closed.
+     */
+    emit(type: "chatClose"): void;
+
+    /**
+     * Fired when the chat window is opened.
+     */
+    on(type: "chatOpen", call: () => void): void;
+    /**
+     * Removes every "chat window opened" event listener with this specific callback.
+     */
+    off(type: "chatOpen", call: () => void): void;
+    /**
+     * Emitted when the chat window is opened.
+     */
+    emit(type: "chatOpen"): void;
 }
 
 /**
