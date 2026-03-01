@@ -34,11 +34,6 @@ declare var enums: {
  * ```
  */
 declare function makeEnum(vars: string[]): JSEnum;
-
-declare interface JSEnum {
-    [key: string]: number;
-}
-
 /**
  * Asserts that a particular expression is truthy, and throws an error if it is falsy.
  * @param exp The expression that is expected to be truthy.
@@ -74,15 +69,6 @@ declare function closest(element: Node, parElement: Node): boolean;
  * @returns An object which contains the parsed query string.
  */
 declare function getQuerystring(search: string): Record<string, string>;
-
-/**
- * A {@link Vector2} point, but as an array. Represented as [x, y].
- */
-type Point = [number, number];
-/**
- * A {@link TileCoords} point, but as an array. Represented as [tileX, tileY, charX, charY].
- */
-type TileCharPoint = [number, number, number, number];
 
 /**
  * Bresenham's line algorithm.
@@ -142,36 +128,6 @@ declare function compareABCoords(
     coordB: TileCharPoint,
 ): Point;
 
-declare interface AjaxSettings {
-    /**
-     * HTTP method. (GET or POST)
-     */
-    type: "GET" | "POST";
-    /**
-     * The request URL.
-     */
-    url: string;
-    /**
-     * The payload to send (will be URL-encoded).
-     */
-    data?: Record<string, any>;
-    /**
-     * Determines if the request should be asynchronous (defaults to `true`).
-     */
-    async?: boolean;
-    /**
-     * The success callback. Receives the response text and the request object.
-     * @param response The response text.
-     * @param req The `XMLHttpRequest` object.
-     */
-    done?: (response: string, req: XMLHttpRequest) => void;
-    /**
-     * The error callback. Called if the AJAX request returns an error.
-     * @param req The `XMLHttpRequest` object that failed.
-     */
-    error?: (req: XMLHttpRequest) => void;
-}
-
 /**
  * Makes an AJAX request using XMLHttpRequest.
  * @remarks URL-encodes the payload.
@@ -200,20 +156,6 @@ declare function getRange(
     x2: number,
     y2: number,
 ): Point[];
-
-declare type AssignedColors = [
-    "#660066",
-    "#003366",
-    "#ff9900",
-    "#ff0066",
-    "#003300",
-    "#ff0000",
-    "#3a3a3a",
-    "#006666",
-    "#3399ff",
-    "#3333ff",
-    "#000000",
-];
 
 /**
  * Colors used in {@link assignColor} to assign colors to usernames.
@@ -864,8 +806,6 @@ declare var keyCodeTbl: {
     QUOTE: 222;
 };
 
-type KeyCode = (typeof keyCodeTbl)[keyof typeof keyCodeTbl];
-
 /**
  * Maps modern code strings to legacy keycodes.
  * @param e The event to get the key code of.
@@ -914,32 +854,6 @@ declare function html_tag_esc(
     newline_br: boolean,
 ): string;
 
-// this technically works...
-type HexChar =
-    | "0"
-    | "1"
-    | "2"
-    | "3"
-    | "4"
-    | "5"
-    | "6"
-    | "7"
-    | "8"
-    | "9"
-    | "a"
-    | "A"
-    | "b"
-    | "B"
-    | "c"
-    | "C"
-    | "d"
-    | "D"
-    | "e"
-    | "E"
-    | "f"
-    | "F";
-type HexString = `${HexChar}${string}` | "";
-
 /**
  * Checks if a string is hexadecimal (base-16).
  * @param str The string to check.
@@ -951,8 +865,6 @@ declare function isHexString(str: string): str is HexString;
  * @param epoch The Unix time to convert.
  */
 declare function convertToDate(epoch: number): string;
-
-type RGBArray = [number, number, number];
 
 /**
  * Converts a 0xrrggbb color to a [r,g,b] array.
@@ -1025,24 +937,6 @@ declare class CircularBuffer<T> {
     top(): T | undefined;
 }
 
-type SafeLinkHost = [
-    "yourworldoftext.com",
-    "ourworldofpixels.com",
-    "ourworldoftext.com",
-    "dir.ourworldoftext.com",
-    "test.ourworldoftext.com",
-    "wiki.ourworldoftext.com",
-    "owot.me",
-    "spooks.me",
-    "youtube.com",
-    "discord.com",
-    "discord.gg",
-    "discordapp.com",
-    "reddit.com",
-    "old.reddit.com",
-    string,
-][number];
-
 /**
  * The links that are considered safe to open by default.
  */
@@ -1059,8 +953,6 @@ declare function getBasicHostname(host: string): string;
  * @param host The hostname to check.
  */
 declare function isSafeHostname(host: string): host is SafeLinkHost;
-
-type FixedLengthArray<T, L extends number> = [T, ...T[]] & { length: L };
 
 /**
  * @deprecated For compatibility.
