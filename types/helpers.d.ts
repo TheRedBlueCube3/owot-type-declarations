@@ -521,6 +521,246 @@ declare var elm: {
     [key: string]: HTMLElement | null;
 };
 
+// browser compensation
+/**
+ * The DOM \<div\> element that contains the chatbox. A `display: none` style is appended when the chatbox is not open.
+ */
+declare var chat_window: HTMLDivElement | null;
+/**
+ * The DOM \<div\> element that contains the button (\<span\> and an event listener) to open the chatbox. Its style is set to `display: none` once the chat is opened.
+ */
+declare var chat_open: HTMLDivElement | null;
+/**
+ * The DOM \<button\> element that is the "Send" button in the chatbox.
+ */
+declare var chatsend: HTMLButtonElement | null;
+/**
+ * The DOM \<input\> element that is used to type messages into the chatbox.
+ */
+declare var chatbar: HTMLInputElement | null;
+/**
+ * The \<div\> that contains the close button for the chatbox.
+ */
+declare var chat_close: HTMLDivElement | null;
+/**
+ * The \<div\> that contains the world (page) chat field. Its style is set to `display: none` when the chatbox is not currently focused on world chat.
+ */
+declare var page_chatfield: HTMLDivElement | null;
+/**
+ * The \<div\> that contains the global chat field. Its style is set to `display: none` when the chatbox is not currently focused on global chat.
+ */
+declare var global_chatfield: HTMLDivElement | null;
+/**
+ * The \<div\> that has the "This page" text and the number of unread messages indicated. This element has a "click" event listener attached.
+ */
+declare var chat_page_tab: HTMLDivElement | null;
+/**
+ * The \<div\> that has the "Global" text and the number of unread messages indicated. This element has a "click" event listener attached.
+ */
+declare var chat_global_tab: HTMLDivElement | null;
+/**
+ * The \<span\> that indicates how many clients are connected to your world.
+ */
+declare var usr_online: HTMLSpanElement | null;
+/**
+ * The \<b\> element that indicates how many total messages were unread when the chatbox is closed.
+ */
+declare var total_unread: HTMLElement | null;
+/**
+ * The \<b\> element that indicates how many messages were unread in world chat.
+ */
+declare var page_unread: HTMLElement | null;
+/**
+ * The \<b\> element that indicates how many messages were unread in global chat.
+ */
+declare var global_unread: HTMLElement | null;
+/**
+ * The upper bar header that contains the close button, the global and this page "buttons" and the user count.
+ */
+declare var chat_upper: HTMLDivElement | null;
+/**
+ * The \<h1\> element that shows up when the website is loading. Hidden (`display: none`) after loading.
+ */
+declare var loading: HTMLHeadingElement | null;
+/**
+ * The X coordinate that shows up when the "Show coordinates" option is ticked in the menu. "Coordinates" are 4 {@link Tiles | tiles} in width and height.
+ */
+declare var coord_Y: HTMLSpanElement | null;
+/**
+ * The Y coordinate that shows up when the "Show coordinates" option is ticked in the menu. "Coordinates" are 4 {@link Tiles | tiles} in width and height.
+ */
+declare var coord_X: HTMLSpanElement | null;
+/**
+ * The tile X coordinate that shows up when the coordinate box that appears after ticking "Show coordinates" is clicked.
+ * @see {@link Tiles}
+ */
+declare var tile_Y: HTMLSpanElement | null;
+/**
+ * The tile Y coordinate that shows up when the coordinate box that appears after ticking "Show coordinates" is clicked.
+ * @see {@link Tiles}
+ */
+declare var tile_X: HTMLSpanElement | null;
+/**
+ * The character X coordinate that shows up when the coordinate box that appears after ticking "Show coordinates" is clicked.
+ * @see {@link Tiles}
+ */
+declare var char_Y: HTMLSpanElement | null;
+/**
+ * The character Y coordinate that shows up when the coordinate box that appears after ticking "Show coordinates" is clicked.
+ * @see {@link Tiles}
+ */
+declare var char_X: HTMLSpanElement | null;
+/**
+ * This element doesn't exist. It is a leftover by FP.
+ * @deprecated
+ */
+declare var color_input_form_input: null;
+/**
+ * The \<div\> protection window that appears when you try to protect a specific tile/region.
+ */
+declare var protect_precision: HTMLDivElement | null;
+/**
+ * The \<div\> erase-region window that appears when you try to erase a specific region.
+ */
+declare var erase_region: HTMLDivElement | null;
+/**
+ * The \<div\> that contains many ui-vis class elements that show server-wide or script announcements.
+ */
+declare var announce_container: HTMLDivElement | null;
+/**
+ * A clickable \<div\> that selects the "tile" protect type for the protection window.
+ */
+declare var tile_choice: HTMLDivElement | null;
+/**
+ * A clickable \<div\> that selects the "character" protect type for the protection window.
+ */
+declare var char_choice: HTMLDivElement | null;
+/**
+ * The "menu" dropdown box that contains most of OWOT's functions. Clickable via event listener.
+ */
+declare var menu_elm: HTMLSpanElement | null;
+/**
+ * The \<div\> that contains the dropdown elements in a \<ul\> element.
+ */
+declare var nav_elm: HTMLDivElement | null;
+/**
+ * The \<div\> that contains the coordinate box seen when enabling "Show coordinates".
+ */
+declare var coords: HTMLDivElement | null;
+/**
+ * The \<div\> that contains the cursor coordinates (in {@link Tiles | tile} format).
+ */
+declare var cursor_coords: HTMLDivElement | null;
+/**
+ * The actual cursor coordinates in the "Show coordinates" box. Styled as `display: none` when the cursor is not available.
+ */
+declare var cursor_on: HTMLSpanElement | null;
+/**
+ * If the cursor coordinates are not available, this span, which always has a value of "N/A", loses its style of `display: none` and shows up in place of {@link elm.cursor_on | cursor_on}.
+ */
+declare var cursor_off: HTMLSpanElement | null;
+/**
+ * The \<div\> that contains the "possibly untrusted JavaScript code" window. The `display: none` style is appended when the user has not opened any JavaScript links, and removed if they have.
+ */
+declare var confirm_js: HTMLDivElement | null;
+/**
+ * This always has a value of "This is a snippet of possibly untrusted JavaScript code."
+ * @see {@link elm.confirm_js}
+ */
+declare var confirm_js_msg: HTMLSpanElement | null;
+/**
+ * This is the JavaScript code that is supposed to be reviewed before execution.
+ * @see {@link elm.confirm_js}
+ */
+declare var confirm_js_code: HTMLSpanElement | null;
+/**
+ * This always has a value of "Copy & Close". If this anchor is clicked, the window will close.
+ * @see {@link elm.confirm_js}
+ */
+declare var confirm_js_copy: HTMLAnchorElement | null;
+/**
+ * The \<div\> that contains the entire OWOT canvas.
+ */
+declare var main_view: HTMLDivElement | null;
+/**
+ * The DOM <a> anchor element. It is used for user link clicks and changes the href upon hovering on a link.
+ *
+ * Upon hovering, it also changes the {@link linkParams} global variable to match the metadata of the hovered link.
+ *
+ * @example
+ * Log to the console whenever a JavaScript link is clicked:
+ * ```js
+ * linkElm.addEventListener("click", () => {
+ *   if(linkParams.protocol === "javascript") console.log(linkParams.protocol)
+ * })
+ */
+declare var link_element: HTMLAnchorElement | null;
+/**
+ * The DOM <div> element used to scale the linkElm to the same size as a cell (character) within the OWOT canvas.
+ *
+ * @example
+ * Highlights the URL being hovered over.
+ * ```js
+ * linkDiv.style.background = `rgba(22, 208, 233, 0.5)`
+ */
+declare var link_div: HTMLDivElement | null;
+/**
+ * The anchor element that starts selecting a protection area when clicked. It always says "Select",
+ */
+declare var protect_selection: HTMLAnchorElement | null;
+/**
+ * When you press ALT+Q, this \<div\> shows up to give you a text decoration to use in your text. Styled `display: none` when the window is hidden.
+ */
+declare var text_decorations: HTMLDivElement | null;
+/**
+ * The \<div\> that represents the bold text decoration.
+ * @see {@link elm.text_decorations}
+ */
+declare var text_deco_b: HTMLDivElement | null;
+/**
+ * The \<div\> that represents the italic text decoration.
+ * @see {@link elm.text_decorations}
+ */
+declare var text_deco_i: HTMLDivElement | null;
+/**
+ * The \<div\> that represents the underline text decoration.
+ * @see {@link elm.text_decorations}
+ */
+declare var text_deco_u: HTMLDivElement | null;
+/**
+ * The \<div\> that represents the strikethrough text decoration.
+ * @see {@link elm.text_decorations}
+ */
+declare var text_deco_s: HTMLDivElement | null;
+/**
+ * When erasing a region in your world, this radio button allows you to erase one region.
+ */
+declare var erase_region_once: HTMLInputElement | null;
+/**
+ * When erasing a region in your world, this radio button allows you to erase multiple regions.
+ */
+declare var erase_region_mult: HTMLInputElement | null;
+/**
+ * When erasing a region in your world, this radio button allows you to erase regions while holding Ctrl.
+ */
+declare var erase_region_ctrl: HTMLInputElement | null;
+/**
+ * When erasing a region in your world, if this checkbox is ticked, erases will erase tiles instead of characters.
+ */
+declare var erase_region_snap: HTMLInputElement | null;
+/**
+ * If you hover over a "note:message" URL link in OWOT, this tooltip will remove its `display: none` style and show the message embedded in the link.
+ */
+declare var link_tooltip: HTMLDivElement | null;
+/**
+ * The OWOT canvas element.
+ */
+declare var owot: HTMLCanvasElement | null;
+/**
+ * The OWOT text input element used for sending character data to the canvas.
+ */
+declare var textInput: HTMLTextAreaElement | null;
+
 /**
  * Adds elements to the {@link elm | global element reference dictionary}.
  * @param list The elements to add.
@@ -663,7 +903,7 @@ declare function tile_offset_object(
 ): void;
 
 /**
- *
+ * Escapes a string to be safe with HTML.
  * @param str The string to escape.
  * @param non_breaking_space Whether to replace spaces with \&nbsp;
  * @param newline_br Whether to replace newlines with \<br\>.
@@ -674,6 +914,7 @@ declare function html_tag_esc(
     newline_br: boolean,
 ): string;
 
+// this technically works...
 type HexChar =
     | "0"
     | "1"
