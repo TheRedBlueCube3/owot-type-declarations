@@ -828,7 +828,7 @@ declare function escapeURLQuote(url: string): string | "";
  * Extracts a position out of a string like "x,y".
  * @param ref The string to extract a position from.
  */
-declare function getPos(ref: string): Point;
+declare function getPos(ref: YXStringPoint): Point;
 
 /**
  * Offsets every tile coordinate in `data` by the specified amount.

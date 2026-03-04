@@ -37,6 +37,8 @@ declare var YourWorld: {
     Nickname: string | null;
 };
 
+declare var menu: Menu;
+
 /**
  * The OWOT DOM <canvas> element. Initialized in {@link init_dom}. Its selector is #owot.
  *
@@ -204,6 +206,7 @@ declare function writeCharToXY(
 
 declare interface wGlobals {
     acceptOwnEdits: boolean;
+    menu: Menu;
     backgroundInfo: {
         x: number;
         y: number;
@@ -233,6 +236,34 @@ declare interface wGlobals {
      * Listens for comu events.
      */
     on(eventName: "cmd", callback: (e: Cmd) => void): void;
+    /**
+     * Removes "comu event" listeners.
+     */
+    off(eventName: "cmd", callback: (e: Cmd) => void): void;
+
+    /**
+     * Fired after a write to the canvas.
+     */
+    on(eventName: "write", callback: (e: OWOTCharacterData) => void): void;
+    /**
+     * Removes "after write" listeners.
+     */
+    off(eventName: "write", callback: (e: OWOTCharacterData) => void): void;
+
+    /**
+     * Fired before a write to the canvas.
+     */
+    on(
+        eventName: "writeBefore",
+        callback: (e: OWOTCharacterData) => void,
+    ): void;
+    /**
+     * Removes "before write" listeners.
+     */
+    off(
+        eventName: "writeBefore",
+        callback: (e: OWOTCharacterData) => void,
+    ): void;
 }
 
 /**
@@ -303,7 +334,7 @@ declare interface TileCoords {
 /**
  * cmd is a feature of OWOT that allows scripts to exchange string messages.
  */
-declare interface Cmd {
+declare interface Cmd extends WSMessage {
     /**
      * Kind of message - always "cmd".
      */
@@ -359,6 +390,55 @@ declare interface Character {
      * Text decorations that this character has.
      */
     decoration: number | Decorations | null;
+}
+/**
+ * The meaningful parameters to writeCharTo().
+ */
+declare interface OWOTCharacterData {
+    /**
+     * The character to write.
+     */
+    char: string;
+    /**
+     * The character color.
+     */
+    color: number;
+    /**
+     * The character's cell color.
+     */
+    bgColor: number;
+    /**
+     * The character's tile X position.
+     */
+    tileX: number;
+    /**
+     * The character's tile Y position.
+     */
+    tileY: number;
+    /**
+     * The character's X position within the tile.
+     */
+    charX: number;
+    /**
+     * The character's Y position within the tile.
+     */
+    charY: number;
+    /**
+     * Whether the character is bold.
+     */
+    bold: boolean;
+    /**
+     * Whether the character is italic.
+     */
+    italic: boolean;
+    /**
+     * Whether the character is underlined.
+     */
+    underline: boolean;
+    /**
+     * Whether the character is strikethrough'd.
+     */
+    strikethrough: boolean;
 }
 /**
  * Every character decoration.

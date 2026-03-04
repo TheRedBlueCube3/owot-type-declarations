@@ -323,9 +323,9 @@ declare interface ApiChatOpts {
     customMeta: string;
 }
 
-type PointWithWidth = [number, number, number];
+declare type PointWithWidth = [number, number, number];
 
-type LongWidthChar = [
+declare type LongWidthChar = [
     3061,
     11835,
     65021,
@@ -352,8 +352,36 @@ type LongWidthChar = [
     43461,
 ][number];
 
-interface ChatSendEvent {
+declare interface ChatSendEvent {
     message: string;
     opts: ApiChatOpts;
     cancel: boolean;
+}
+
+/* renderer.js/.d.ts block */
+
+declare type StringPoint = `${number},${number}`;
+
+declare interface CachedTile {
+    pool: TilePool;
+    x: number;
+    y: number;
+    idx?: number;
+    poolX: number;
+    poolY: number;
+    clampW: number;
+    clampH: number;
+}
+
+declare interface TilePool {
+    canv: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    map: Record<number, CachedTile>;
+    tileWidth: number;
+    tileHeight: number;
+    maxWidth: number;
+    maxHeight: number;
+    width: number;
+    height: number;
+    size: number;
 }
