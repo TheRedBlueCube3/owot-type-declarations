@@ -323,6 +323,9 @@ declare interface ApiChatOpts {
     customMeta: string;
 }
 
+/**
+ * An array Vector2 with a width, used in {@link emoteList}.
+ */
 declare type PointWithWidth = [number, number, number];
 
 declare type LongWidthChar = [
@@ -384,4 +387,223 @@ declare interface TilePool {
     width: number;
     height: number;
     size: number;
+}
+
+declare interface AvailablePool {
+    pool: TilePool;
+    index: number;
+}
+
+declare interface WorldTile
+{
+    content: FixedLengthArray<string, 128>;
+    properties: WorldTileProperties;
+    redraw: boolean;
+    serial?: number;
+    fastQueue?: boolean;
+    backgroundColor?: number;
+}
+
+declare interface WorldTileProperties
+{
+    bgcolor: FixedLengthArray<number, 128>;
+    color: FixedLengthArray<number, 128>;
+    writability: Protections | null;
+}
+
+declare type ShardGridManipulableChar =
+    | 0x1fb3e
+    | 0x1fb3f
+    | 0x1fb43
+    | 0x14b44
+    | 0x1fb49
+    | 0x1fb4a
+    | 0x1fb4e
+    | 0x1fb4f
+    | 0x1fb54
+    | 0x1fb55
+    | 0x1fb59
+    | 0x1fb5a
+    | 0x1fb5f
+    | 0x1fb60
+    | 0x1fb64
+    | 0x1fb65;
+
+declare type LinkType = "url" | "coord" | "note";
+
+/* owot.js block */
+/**
+ * Protections are levels of protection that a character can have. It is also used for permissions.
+ */
+declare const enum Protections {
+    /**
+     * Public - writable by anyone.
+     */
+    Public = 0,
+    /**
+     * Member - writable by the world owner and members.
+     */
+    Members = 1,
+    /**
+     * Owner - writable only by the world owner.
+     */
+    Admin = 2,
+}
+/**
+ * The meaningful parameters to writeCharTo().
+ */
+declare interface OWOTCharacterData {
+    /**
+     * The character to write.
+     */
+    char: string;
+    /**
+     * The character color.
+     */
+    color: number;
+    /**
+     * The character's cell color.
+     */
+    bgColor: number;
+    /**
+     * The character's tile X position.
+     */
+    tileX: number;
+    /**
+     * The character's tile Y position.
+     */
+    tileY: number;
+    /**
+     * The character's X position within the tile.
+     */
+    charX: number;
+    /**
+     * The character's Y position within the tile.
+     */
+    charY: number;
+    /**
+     * Whether the character is bold.
+     */
+    bold: boolean;
+    /**
+     * Whether the character is italic.
+     */
+    italic: boolean;
+    /**
+     * Whether the character is underlined.
+     */
+    underline: boolean;
+    /**
+     * Whether the character is strikethrough'd.
+     */
+    strikethrough: boolean;
+}
+/**
+ * Every character decoration.
+ */
+declare interface Decorations {
+    /**
+     * 1 if bold, 0 otherwise.
+     */
+    bold: NumBoolean;
+    /**
+     * 1 if italic, 0 otherwise.
+     */
+    italic: NumBoolean;
+    /**
+     * 1 if underline, 0 otherwise.
+     */
+    under: NumBoolean;
+    /**
+     * 1 if strikethrough, 0 otherwise.
+     */
+    strike: NumBoolean;
+}
+/**
+ * cmd is a feature of OWOT that allows scripts to exchange string messages.
+ */
+declare interface Cmd extends WSMessage {
+    /**
+     * Kind of message - always "cmd".
+     */
+    kind: "cmd";
+    /**
+     * The actual message payload.
+     */
+    data: string;
+    /**
+     * The sender's channel ID.
+     */
+    sender: number;
+    /**
+     * Module source identifier.
+     * @remarks Always appears as "cmd" in observed messages
+     */
+    source: "cmd";
+    /**
+     * The sender's Uvias display name.
+     */
+    username?: string;
+    /**
+     * The sender's Uvias ID.
+     */
+    id?: number;
+}
+
+/**
+ * An interface for character information. Returned by {@link getCharInfoXY}.
+ */
+declare interface Character {
+    /**
+     * If the character is loaded in the world, this is true.
+     */
+    loaded: boolean;
+    /**
+     * The character.
+     */
+    char: string;
+    /**
+     * The character color, in `0xrrggbb` format.
+     */
+    color: number;
+    /**
+     * The character background color, in `0xrrggbb` format. -1 if not set.
+     */
+    bgColor: number | -1;
+    /**
+     * The character protection status.
+     */
+    protection: Protections;
+    /**
+     * Text decorations that this character has.
+     */
+    decoration: number | Decorations | null;
+}
+
+/**
+ * Tile coordinate system.
+ * @see {@link Tiles}
+ */
+declare interface TileCoords {
+    tileX: number;
+    tileY: number;
+    charX: number;
+    charY: number;
+}
+
+interface Vector2 {
+    x: number;
+    y: number;
+}
+
+/**
+ * @module Tiles
+ *
+ * OWOT worlds are divided into 16x8 character grids, known as tiles. These tiles are used in many OWOT functions like {@link getChar}.
+ *
+ * OWOT worlds are also indexed into possibly negative coordinates. `0,0` is the bottom-right quadrant, `-1,-1` is the top-left, `-1,0` is the bottom-left, and `0,-1` is the top-right.
+ */
+declare interface Tiles {
+    /** This interface exists only for documentation linking. */
+    readonly _documentation: unique symbol;
 }

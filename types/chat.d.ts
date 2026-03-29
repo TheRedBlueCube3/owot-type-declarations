@@ -449,6 +449,6 @@ declare function updateUserCount(): void;
  */
 declare function chatType(
     registered: boolean,
-    nickname?: string,
+    nickname: string | undefined,
     realUsername: string,
 );
